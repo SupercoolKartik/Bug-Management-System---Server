@@ -1,0 +1,11 @@
+{
+  "name": "bugmanagementsystem-backend",
+  "version": "1.0.0",
+  "description": "This contains the server side code of Bug Management System application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Suraj Kr Saw",
+  "license": "ISC"
+}
