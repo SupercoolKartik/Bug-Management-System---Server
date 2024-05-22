@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "This contains the server side code of Bug Management System application.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Suraj Kr Saw",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
 }
