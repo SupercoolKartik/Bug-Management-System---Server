@@ -21,6 +21,13 @@ app.get("/", (req, res) => {
   res.send("Hello it's the server of BMS!");
 });
 
+app.post("/createuser", (req, res) => {
+  res.send(req.body.somedata);
+});
+
+import authRouter from "./routes/auth.js";
+app.use("/api/auth", authRouter);
+
 app.listen(3500, () => {
   console.log("App is listening on http://localhost:3500");
 });
