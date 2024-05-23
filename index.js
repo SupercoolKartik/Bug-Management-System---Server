@@ -10,6 +10,9 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT;
 
+import connectToMongo from "./db.js";
+connectToMongo();
+
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 // Middleware to parse URL-encoded bodies
@@ -28,6 +31,6 @@ app.post("/createuser", (req, res) => {
 import authRouter from "./routes/auth.js";
 app.use("/api/auth", authRouter);
 
-app.listen(3500, () => {
-  console.log("App is listening on http://localhost:3500");
+app.listen(PORT, () => {
+  console.log(`App is listening on http://localhost:${PORT}`);
 });

@@ -1,11 +1,11 @@
-import express, { Router, application } from "express";
+import express, { Router } from "express";
 import dotenv from "dotenv";
+import User from "../schema/users.js";
 
 const router = express.Router();
 
 router.get("/getusers", (req, res) => {
-  console.log("step2");
-  res.send("Woeking");
+  res.send("This route is working");
 });
 
 export default router;
