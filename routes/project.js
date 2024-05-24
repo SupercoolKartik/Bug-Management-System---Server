@@ -6,14 +6,23 @@ const router = express.Router();
 
 //Route to create a project
 router.post("/createproject", async (req, res) => {
-    try{
-      await Project.create(req.body);
-      res.send("Project created successfully");
-    }
-    catch (error) {
-      console.log(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
+  try {
+    await Project.create(req.body);
+    res.send("Project created successfully");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/fetchallprojects", async (req, res) => {
+  try {
+    const projects = await Project.find({ creatorsId: req.body.creatorsId });
+    res.json(projects);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 // Route to add a new user to the users array in a project
