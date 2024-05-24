@@ -4,7 +4,7 @@ import Project from "../schema/projects.js";
 import mongoose from "mongoose";
 const router = express.Router();
 
-//Route to create a project
+//ROUTE 1: Route to CREATE A PROJECT
 router.post("/createproject", async (req, res) => {
   try {
     await Project.create(req.body);
@@ -15,6 +15,7 @@ router.post("/createproject", async (req, res) => {
   }
 });
 
+//ROUTE 2: Route to FETCH ALL PROJECTS
 router.get("/fetchallprojects", async (req, res) => {
   try {
     const projects = await Project.find({ creatorsId: req.body.creatorsId });
@@ -25,7 +26,7 @@ router.get("/fetchallprojects", async (req, res) => {
   }
 });
 
-// Route to add a new user to the users array in a project
+//ROUTE 3: Route to ADD A USER to the users array in a project
 router.put("/adduser", async (req, res) => {
   const { projectId, userId } = req.body;
 
@@ -48,7 +49,7 @@ router.put("/adduser", async (req, res) => {
   }
 });
 
-// Route to add a new Ticket to the tickets array in a project
+//ROUTE 4: Route to ADD A TICKET to the tickets array in a project
 router.put("/addticket", async (req, res) => {
   const { projectId, ticketId } = req.body;
 
@@ -68,6 +69,24 @@ router.put("/addticket", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//ROUTE 5: Route to DELETE the Project (Login Required)
+router.delete("/deleteproject/:id", async (req, res) => {
+  try {
+    // Check if the Project with the provided id exists
+    let project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ msg: "No project found with that ID" });
+    }
+
+    // Find the project to be Deleted and Delete it
+    project = await Project.findByIdAndDelete(req.params.id);
+    res.json({ Success: "The note has been deleted", project: project });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
