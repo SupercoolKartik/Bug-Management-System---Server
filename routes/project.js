@@ -16,9 +16,12 @@ router.post("/createproject", async (req, res) => {
 });
 
 //ROUTE 2: Route to FETCH ALL PROJECTS
-router.get("/fetchallprojects", async (req, res) => {
+router.get("/fetchallprojects/:id", async (req, res) => {
   try {
-    const projects = await Project.find({ creatorsId: req.body.creatorsId });
+    const projects = await Project.find({ creatorsId: req.params.id });
+    if (projects.length === 0) {
+      return res.status(404).send("There are no projects created by you!");
+    }
     res.json(projects);
   } catch (error) {
     console.error(error);
