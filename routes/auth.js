@@ -15,7 +15,7 @@ router.post("/createuser", async (req, res) => {
     }
 
     user = User.create(req.body);
-    res.send("User created successfully!");
+    res.json({ msg: "User created successfully!" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
     }
     if (user.password == req.body.password) {
       success = true;
-      return res.send(user);
+      return res.json(user);
     } else return res.status(401).json({ error: "Passwords don't match!" });
   } catch (error) {
     console.error(error);

@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/createproject", async (req, res) => {
   try {
     await Project.create(req.body);
-    res.send("Project created successfully");
+    res.json({ msg: "Project created successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -20,7 +20,9 @@ router.get("/fetchallprojects/:id", async (req, res) => {
   try {
     const projects = await Project.find({ creatorsId: req.params.id });
     if (projects.length === 0) {
-      return res.status(404).send("There are no projects created by you!");
+      return res
+        .status(404)
+        .json({ error: "There are no projects created by you!" });
     }
     res.json(projects);
   } catch (error) {
@@ -45,7 +47,7 @@ router.put("/adduser", async (req, res) => {
       return res.status(404).json({ error: "Project not found." });
     }
 
-    res.status(200).json(updatedProject);
+    res.status(200).json({ msg: "User is/Users are added successfully!" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -68,7 +70,7 @@ router.put("/addticket", async (req, res) => {
       return res.status(404).json({ error: "Project not found." });
     }
 
-    res.status(200).json(updatedProject);
+    res.status(200).json({ msg: "Ticket is added successfully!" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
