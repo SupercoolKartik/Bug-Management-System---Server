@@ -34,6 +34,9 @@ app.use("/api/auth", authRouter);
 import projectsRouter from "./routes/project.js";
 app.use("/api/projects", projectsRouter);
 
+import ticketsRouter from "./routes/ticket.js";
+app.use("/api/tickets", ticketsRouter);
+
 app.listen(PORT, () => {
   console.log(`App is listening on http://localhost:${PORT}`);
 });
