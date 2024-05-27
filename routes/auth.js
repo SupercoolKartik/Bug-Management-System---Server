@@ -2,12 +2,6 @@ import express, { Router } from "express";
 import dotenv from "dotenv";
 import User from "../schema/users.js";
 const router = express.Router();
-import bodyParser from "body-parser";
-
-// Middleware to parse JSON bodies
-router.use(bodyParser.json());
-// Middleware to parse URL-encoded bodies
-router.use(bodyParser.urlencoded({ extended: true }));
 
 //ROUTE 1: Create a User using POST api/auth/createuser
 router.post("/createuser", async (req, res) => {
