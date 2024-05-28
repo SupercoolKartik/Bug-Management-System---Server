@@ -85,7 +85,21 @@ router.put("/addticket", async (req, res) => {
   }
 });
 
-//ROUTE 5: Route to DELETE the Project (Login Required)
+//ROUTE 5: Route to FETCH PROJECT DATA, (Login required)
+router.get("/getprojectdata/:id", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ error: "Project not found." });
+    } //This if statement will probably never be used
+    return res.status(200).json(project);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//ROUTE 6: Route to DELETE the Project (Login Required)
 router.delete("/deleteproject/:id", async (req, res) => {
   try {
     // Check if the Project with the provided id exists
