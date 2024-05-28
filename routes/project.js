@@ -31,15 +31,20 @@ router.get("/fetchallprojects/:id", async (req, res) => {
   }
 });
 
-//ROUTE 3: Route to ADD A USER to the users array in a project
 router.put("/adduser", async (req, res) => {
-  const { projectId, userId } = req.body;
+  const { projectId, userId, firstName, lastName } = req.body;
 
   try {
     const objectId = new mongoose.Types.ObjectId(projectId);
+
+    // Use $set to add or update the user details in the users map
     const updatedProject = await Project.findByIdAndUpdate(
       objectId,
-      { $addToSet: { users: userId } }, // Use $addToSet to avoid duplicates
+      {
+        $set: {
+          [`users.${userId}`]: { firstName: firstName, lastName: lastName },
+        },
+      },
       { new: true, useFindAndModify: false }
     );
 
@@ -47,7 +52,10 @@ router.put("/adduser", async (req, res) => {
       return res.status(404).json({ error: "Project not found." });
     }
 
-    res.status(200).json({ msg: "User is/Users are added successfully!" });
+    res.status(200).json({
+      msg: "User added/updated successfully!",
+      project: updatedProject,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
