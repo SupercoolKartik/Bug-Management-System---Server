@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/createproject", async (req, res) => {
   try {
     await Project.create(req.body);
-    res.json({ msg: "Project created successfully" });
+    res.status(201).json({ msg: "Project created successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -24,7 +24,7 @@ router.get("/fetchallprojects/:id", async (req, res) => {
         .status(404)
         .json({ error: "There are no projects created by you!" });
     }
-    res.json(projects);
+    res.status(200).json(projects);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -88,7 +88,9 @@ router.delete("/deleteproject/:id", async (req, res) => {
 
     // Find the project to be Deleted and Delete it
     project = await Project.findByIdAndDelete(req.params.id);
-    res.json({ Success: "The note has been deleted", project: project });
+    res
+      .status(200)
+      .json({ Success: "The note has been deleted", project: project });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

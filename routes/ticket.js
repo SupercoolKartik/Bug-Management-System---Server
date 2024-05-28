@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/createticket", async (req, res) => {
   try {
     await Ticket.create(req.body);
-    res.json({ msg: "Ticket is probably created" });
+    res.status(201).json({ msg: "Ticket is probably created" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
