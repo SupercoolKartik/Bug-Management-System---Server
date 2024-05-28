@@ -14,8 +14,9 @@ router.post("/createuser", async (req, res) => {
       return res.status(400).json({ error: "Email is not unique!" });
     }
 
-    user = User.create(req.body);
-    res.status(201).json({ msg: "User created successfully!" });
+    user = await User.create(req.body);
+    const userId = user._id.toString();
+    res.status(201).json({ msg: "User created successfully!", userId });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -25,14 +26,15 @@ router.post("/createuser", async (req, res) => {
 //ROUTE 2: User Authentication using POST api/auth/login
 router.post("/login", async (req, res) => {
   try {
-    let success = false;
     let user = await User.findOne({ email: req.body.email }).exec();
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
     if (user.password == req.body.password) {
-      success = true;
-      return res.status(200).json({ msg: "User logged in successfully!" });
+      const userId = user._id.toString();
+      return res
+        .status(200)
+        .json({ msg: "User logged in successfully!", userId });
     } else return res.status(401).json({ error: "Passwords don't match!" });
   } catch (error) {
     console.error(error);
