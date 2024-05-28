@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
     }
     if (user.password == req.body.password) {
       success = true;
-      return res.json(user);
+      return res.json(success, user);
     } else return res.status(401).json({ error: "Passwords don't match!" });
   } catch (error) {
     console.error(error);
