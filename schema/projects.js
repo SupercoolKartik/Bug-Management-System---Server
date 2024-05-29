@@ -1,37 +1,38 @@
 import mongoose, { Schema } from "mongoose";
 
-const userDetailSchema = new Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-  },
-  { _id: false }
-); // Disable _id for embedded documents
+// const userDetailSchema = new Schema(
+//   {
+//     firstName: {
+//       type: String,
+//       required: true,
+//     },
+//     lastName: {
+//       type: String,
+//       required: true,
+//     },
+//   },
+//   { _id: false }
+// ); // Disable _id for embedded documents
 
 const projectSchema = new Schema({
   projectName: {
     type: String,
     required: true,
   },
+  projectDescription: {
+    type: String,
+  },
   creatorsId: {
     type: String,
     required: true,
   },
-  creatorsName: {
+  creatorsFirstName: {
     type: String,
     required: true,
   },
-  users: {
-    //storing user information in the users field as a map of user IDs to user details
-    type: Map,
-    of: userDetailSchema,
-    default: {},
+  creatorsLastName: {
+    type: String,
+    required: true,
   },
   tickets: {
     type: [String],
