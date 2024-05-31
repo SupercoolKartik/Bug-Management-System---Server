@@ -16,7 +16,11 @@ router.post("/createuser", async (req, res) => {
 
     user = await User.create(req.body);
     const userId = user._id.toString();
-    res.status(201).json({ msg: "User created successfully!", userId });
+    const firstName = user.firstName;
+    const lastName = user.lastName;
+    res
+      .status(201)
+      .json({ msg: "User created successfully!", userId, firstName, lastName });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -32,9 +36,14 @@ router.post("/login", async (req, res) => {
     }
     if (user.password == req.body.password) {
       const userId = user._id.toString();
-      return res
-        .status(200)
-        .json({ msg: "User logged in successfully!", userId });
+      const firstName = user.firstName;
+      const lastName = user.lastName;
+      return res.status(200).json({
+        msg: "User logged in successfully!",
+        userId,
+        firstName,
+        lastName,
+      });
     } else return res.status(401).json({ error: "Passwords don't match!" });
   } catch (error) {
     console.error(error);
