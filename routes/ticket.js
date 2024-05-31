@@ -45,4 +45,25 @@ router.put("/editstatus/:tId/:tStatus", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// ROUTE 3: Route handler to fetch all tickets assigned to a user
+router.get("/fetchalltickets/:uId", async (req, res) => {
+  const { uId } = req.params;
+
+  try {
+    const tickets = await Ticket.find({ assigneeId: uId });
+
+    if (!tickets.length) {
+      return res
+        .status(404)
+        .json({ message: "No tickets found for this user." });
+    }
+
+    res.json(tickets);
+  } catch (error) {
+    console.error("Error fetching tickets:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;
