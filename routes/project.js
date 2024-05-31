@@ -8,8 +8,9 @@ const router = express.Router();
 //ROUTE 1: Route to CREATE A PROJECT
 router.post("/createproject", async (req, res) => {
   try {
-    await Project.create(req.body);
-    res.status(201).json({ msg: "Project created successfully" });
+    const project = await Project.create(req.body);
+    const projectId = project._id;
+    res.status(201).json({ msg: "Project created successfully", projectId });
     //-------------->Some changes might be done in case we need to add users along with creating users
   } catch (error) {
     console.log(error);
